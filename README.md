@@ -20,14 +20,20 @@ Este proyecto es el back end de un sistema de gestión de entregas mediante dron
 
 > Alcance: solo back end (API REST). Las pruebas se realizan con Postman.
 
+## 🎓 Datos académicos
+
+| | |
+|---|---|
+| **Universidad** | Universidad del Norte Santo Tomás de Aquino (UNSTA) |
+| **Asignatura** | BackEnd |
+| **Profesor** | Ing. Tulio |
+
 ## 👥 Integrantes
 
-| Nombre | Rol / Módulos a cargo |
-|--------|-----------------------|
-| [Nombre 1] | Cliente, Pedido, consulta de pedido |
-| [Nombre 2] | Dron, Telemetría, asignación y Ruta |
-
-**Asignatura:** [Nombre del curso] · **Profesor:** [Nombre] · **Universidad:** [Nombre]
+| Nombre | Módulos a cargo |
+|--------|-----------------|
+| Arevalo Santiago | Por definir |
+| Cejas Tomás | Por definir |
 
 ## 🛠️ Tecnologías
 
@@ -133,15 +139,15 @@ La API queda disponible en `http://localhost:8080`.
 - Un pedido se crea en estado `PENDIENTE`.
 - Solo se asigna un dron en estado `DISPONIBLE`.
 - El peso del pedido no puede superar la `capacidadMaxima` del dron.
-- El dron debe tener batería suficiente: [definir mínimo, por ejemplo 30 %].
+- El dron debe tener al menos un 30 % de batería para ser asignado.
 - Al asignar, el pedido pasa a `EN_CAMINO` y el dron a `EN_VUELO`.
 
 ## 📓 Bitácora de avance
 
-### Avance 1 — [fecha]
+### Avance 1 — 29/10/2026
 
 - **Qué hicimos:** creamos el proyecto base con Spring Boot, el repositorio y el README inicial.
-- **Problemas y soluciones:** [completar]
+- **Problemas y soluciones:** sin inconvenientes registrados hasta el momento.
 - **Qué sigue:** conectar la aplicación a PostgreSQL y crear la entidad `Cliente`.
 
 <!-- Copien este bloque para cada nuevo avance -->
