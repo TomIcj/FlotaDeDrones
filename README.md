@@ -69,10 +69,10 @@ Este proyecto es el back end de un sistema de gestión de entregas mediante dron
 | `Cliente` | ✅ | Tabla `cliente` creada |
 | `Pedido` | ✅ | Tabla `pedido`, con clave foránea a `cliente` |
 | `EstadoPedido` | ✅ | Enum: `PENDIENTE`, `EN_CAMINO`, `ENTREGADO`, `CANCELADO` |
-| `Dron` | ⬜ | Pendiente |
-| `Telemetria` | ⬜ | Pendiente |
-| `Ruta` | ⬜ | Pendiente |
-| `EstadoDron` | ⬜ | Enum pendiente: `DISPONIBLE`, `EN_VUELO`, `MANTENIMIENTO` |
+| `Dron` | ✅ | Tabla `dron` creada |
+| `Telemetria` | ✅ | Tabla `telemetria`, con clave foránea a `dron` |
+| `Ruta` | ✅ | Tabla `ruta`, con claves foráneas a `dron` y `pedido` |
+| `EstadoDron` | ✅ | Enum: `DISPONIBLE`, `EN_VUELO`, `MANTENIMIENTO` |
 
 ## 📁 Estructura del proyecto
 
