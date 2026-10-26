@@ -281,14 +281,12 @@ Hibernate creó en Neon las cinco tablas del modelo: `cliente`, `pedido`, `dron`
 
 Crear los repositorios (`JpaRepository`) de las cinco entidades.
 
-### Avance 2 — *(planificado)*
+### Planificado
 
 - Repositorios de `Cliente`, `Pedido`, `Dron`, `Telemetria` y `Ruta`.
 - Servicios con la lógica básica de cada entidad (crear, listar, buscar por id).
 - Excepción propia para recursos no encontrados.
 - Pruebas de guardado y consulta contra la base.
-
-### Avance 3 — *(planificado)*
 
 - Controllers REST y CRUD de Cliente, Dron y Pedido.
 - Asignación de dron a pedido y generación de la ruta, con validación de peso y batería.
