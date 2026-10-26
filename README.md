@@ -161,30 +161,48 @@ La API queda disponible en `http://localhost:8080`. La primera conexión puede t
 
 ## 📓 Bitácora de avance
 
-### Avance 1 — 29/10/2026
-
-- **Qué hicimos:** creamos el proyecto base con Spring Boot, el repositorio y el README inicial.
-- **Problemas y soluciones:** sin inconvenientes registrados hasta el momento.
-- **Qué sigue:** conectar la aplicación a PostgreSQL y crear la entidad `Cliente`.
-
-### Avance 2 — 25/10/2026
+### Avance 1 — 25/10/2026
 
 - **Qué hicimos:**
+  - Creamos el repositorio, el proyecto base con Spring Boot y el README inicial.
   - Conectamos la aplicación a una base PostgreSQL alojada en **Neon**, de modo que los dos integrantes trabajamos sobre la misma base.
   - Configuramos `application.properties` con la URL, el usuario y la contraseña, y habilitamos `ddl-auto=update` para que Hibernate cree las tablas.
   - Protegimos las credenciales: agregamos `application.properties` al `.gitignore` y dejamos un `application.properties.example`.
-  - Agregamos Lombok al `pom.xml`.
+  - Agregamos y configuramos Lombok en el `pom.xml`.
+  - Creamos el paquete `model` y las entidades `Cliente` y `Pedido`, con el enum `EstadoPedido`. Mapeamos la relación `Pedido` → `Cliente` con `@ManyToOne` y `@JoinColumn`.
+  - Verificamos en pgAdmin que se crearon las tablas `cliente` y `pedido`, con la clave foránea de `pedido` hacia `cliente`.
 - **Problemas y soluciones:**
   - *Credenciales en el repositorio:* una línea del `.gitignore` se había escrito por error en `.gitattributes`, donde no tiene efecto. La movimos al `.gitignore`.
   - *Lombok con JDK 25:* no generaba getters ni setters porque desde el JDK 23 los procesadores de anotaciones ya no se ejecutan automáticamente. Lo resolvimos declarando `annotationProcessorPaths` en el `maven-compiler-plugin` del `pom.xml`.
-- **Qué sigue:** crear las entidades JPA.
-
-### Avance 3 — 25/10/2026
-
-- **Qué hicimos:**
-  - Creamos el paquete `model` y las entidades `Cliente` y `Pedido`, con el enum `EstadoPedido`.
-  - Mapeamos la relación `Pedido` → `Cliente` con `@ManyToOne` y `@JoinColumn`.
-  - Verificamos en pgAdmin que se crearon las tablas `cliente` y `pedido`, con la clave foránea de `pedido` hacia `cliente`.
-- **Problemas y soluciones:**
   - *Clase duplicada:* al pegar el código en una clase recién creada, el `package` y la declaración quedaron repetidos. Se resuelve seleccionando todo el contenido y pegando encima.
-  - *Enum equivocado:* se pegó el contenido de `EstadoDron` dentro de `EstadoPedido`; se corrigió dejando en cada archivo solo su
+  - *Enum equivocado:* se pegó el contenido de `EstadoDron` dentro de `EstadoPedido`; se corrigió dejando en cada archivo solo su enum.
+- **Qué sigue:** terminar las entidades `Dron`, `Telemetria` y `Ruta`.
+
+### Planificado
+
+- Repositorios (`JpaRepository`) de las cinco entidades.
+- Servicios con la lógica básica de cada entidad.
+- Manejo de errores (recurso no encontrado).
+- Controllers REST y CRUD de Cliente, Dron y Pedido.
+- Asignación de dron a pedido y generación de ruta.
+- Recepción de telemetría.
+- Colección de Postman con las pruebas.
+
+<!-- Copien este bloque para cada nuevo avance -->
+
+## 📸 Pruebas y capturas
+
+*(Agregar aquí las capturas a medida que se implemente cada funcionalidad: tablas en pgAdmin y pruebas en Postman)*
+
+## ✅ Estado del proyecto
+
+- [x] Repositorio y proyecto base
+- [x] Conexión a PostgreSQL (Neon)
+- [ ] Entidades JPA (`Cliente` y `Pedido` listas; faltan `Dron`, `Telemetria` y `Ruta`)
+- [ ] Repositorios
+- [ ] Servicios
+- [ ] Controllers y CRUD de Cliente, Dron y Pedido
+- [ ] Asignación de dron y generación de ruta
+- [ ] Recepción de telemetría
+- [ ] Colección de Postman final
+- [ ] Presentación
