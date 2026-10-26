@@ -32,19 +32,21 @@ Este proyecto es el back end de un sistema de gestión de entregas mediante dron
 
 | Nombre | Módulos a cargo |
 |--------|-----------------|
-| Arevalo Santiago | Por definir |
-| Cejas Tomás | Por definir |
+| Arevalo Santiago | `Cliente`, `Pedido` y enum `EstadoPedido` |
+| Cejas Tomás | `Dron`, `Telemetria`, `Ruta` y enum `EstadoDron` |
 
 ## 🛠️ Tecnologías
 
 | Tecnología | Uso |
 |------------|-----|
 | Java 25 | Lenguaje principal |
-| Spring Boot | Framework para la API REST |
-| Spring Data JPA | Acceso a datos y mapeo de entidades |
-| PostgreSQL | Base de datos relacional |
+| Spring Boot 4.1.2 | Framework para la API REST |
+| Spring Data JPA (Hibernate) | Acceso a datos y mapeo de entidades |
+| PostgreSQL en Neon | Base de datos relacional alojada en la nube |
+| Lombok | Generación de getters, setters y constructores |
 | Maven | Gestión de dependencias y build |
 | Postman | Pruebas de los endpoints |
+| pgAdmin | Consulta y verificación de la base de datos |
 | IntelliJ IDEA | Entorno de desarrollo |
 
 ## 🧩 Diagrama UML
@@ -60,13 +62,25 @@ Este proyecto es el back end de un sistema de gestión de entregas mediante dron
 | Ruta → Pedido | Muchos a uno |
 | Pedido → Cliente | Muchos a uno |
 
+### Estado de las entidades
+
+| Entidad | Estado | Detalle |
+|---------|:------:|---------|
+| `Cliente` | ✅ | Tabla `cliente` creada |
+| `Pedido` | ✅ | Tabla `pedido`, con clave foránea a `cliente` |
+| `EstadoPedido` | ✅ | Enum: `PENDIENTE`, `EN_CAMINO`, `ENTREGADO`, `CANCELADO` |
+| `Dron` | ⬜ | Pendiente |
+| `Telemetria` | ⬜ | Pendiente |
+| `Ruta` | ⬜ | Pendiente |
+| `EstadoDron` | ⬜ | Enum pendiente: `DISPONIBLE`, `EN_VUELO`, `MANTENIMIENTO` |
+
 ## 📁 Estructura del proyecto
 
 ```
 FlotaDeDrones/
 ├── docs/                    # Diagramas e imágenes del informe
 ├── FlotadeDrones/           # Proyecto Spring Boot
-│   ├── src/main/java/...
+│   ├── src/main/java/com/example/FlotadeDrones/
 │   │   ├── model/           # Entidades JPA y enums
 │   │   ├── repository/      # Interfaces JpaRepository
 │   │   ├── service/         # Lógica de negocio
@@ -78,13 +92,15 @@ FlotaDeDrones/
 └── README.md
 ```
 
+> Por ahora solo existe el paquete `model`; el resto se crea a medida que avanza el proyecto.
+
 ## ⚙️ Cómo ejecutar el proyecto
 
 ### Requisitos previos
 
 - JDK 25
 - Maven
-- PostgreSQL
+- Credenciales de la base de datos en Neon (se piden a los integrantes por privado, no están en el repositorio)
 
 ### Pasos
 
@@ -95,29 +111,30 @@ git clone https://github.com/TomIcj/FlotaDeDrones.git
 cd FlotaDeDrones/FlotadeDrones
 ```
 
-**2. Crear la base de datos**
+**2. Crear `src/main/resources/application.properties`**
 
-```sql
-CREATE DATABASE drones_db;
-```
-
-**3. Configurar `src/main/resources/application.properties`**
+Este archivo está excluido del repositorio (`.gitignore`) porque contiene la contraseña. Se crea a partir de `application.properties.example`:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/drones_db
-spring.datasource.username=TU_USUARIO
+spring.application.name=FlotadeDrones
+
+spring.datasource.url=jdbc:postgresql://HOST_DE_NEON:5432/neondb?sslmode=require
+spring.datasource.username=USUARIO
 spring.datasource.password=TU_CONTRASEÑA
+
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
-**4. Ejecutar la aplicación**
+> Neon exige conexión segura, por eso la URL termina en `?sslmode=require`. Con `ddl-auto=update`, Hibernate crea las tablas a partir de las entidades al iniciar la aplicación.
+
+**3. Ejecutar la aplicación**
 
 ```bash
 mvn spring-boot:run
 ```
 
-La API queda disponible en `http://localhost:8080`.
+La API queda disponible en `http://localhost:8080`. La primera conexión puede tardar unos segundos si Neon estaba suspendida.
 
 ## 📡 Endpoints
 
@@ -144,24 +161,47 @@ La API queda disponible en `http://localhost:8080`.
 
 ## 📓 Bitácora de avance
 
-### Avance 1 — 29/10/2026
+### Avance 1 — 25/10/2026
 
-- **Qué hicimos:** creamos el proyecto base con Spring Boot, el repositorio y el README inicial.
-- **Problemas y soluciones:** sin inconvenientes registrados hasta el momento.
-- **Qué sigue:** conectar la aplicación a PostgreSQL y crear la entidad `Cliente`.
+- **Qué hicimos:**
+  - Creamos el repositorio, el proyecto base con Spring Boot y el README inicial.
+  - Conectamos la aplicación a una base PostgreSQL alojada en **Neon**, de modo que los dos integrantes trabajamos sobre la misma base.
+  - Configuramos `application.properties` con la URL, el usuario y la contraseña, y habilitamos `ddl-auto=update` para que Hibernate cree las tablas.
+  - Protegimos las credenciales: agregamos `application.properties` al `.gitignore` y dejamos un `application.properties.example`.
+  - Agregamos y configuramos Lombok en el `pom.xml`.
+  - Creamos el paquete `model` y las entidades `Cliente` y `Pedido`, con el enum `EstadoPedido`. Mapeamos la relación `Pedido` → `Cliente` con `@ManyToOne` y `@JoinColumn`.
+  - Verificamos en pgAdmin que se crearon las tablas `cliente` y `pedido`, con la clave foránea de `pedido` hacia `cliente`.
+- **Problemas y soluciones:**
+  - *Credenciales en el repositorio:* una línea del `.gitignore` se había escrito por error en `.gitattributes`, donde no tiene efecto. La movimos al `.gitignore`.
+  - *Lombok con JDK 25:* no generaba getters ni setters porque desde el JDK 23 los procesadores de anotaciones ya no se ejecutan automáticamente. Lo resolvimos declarando `annotationProcessorPaths` en el `maven-compiler-plugin` del `pom.xml`.
+  - *Clase duplicada:* al pegar el código en una clase recién creada, el `package` y la declaración quedaron repetidos. Se resuelve seleccionando todo el contenido y pegando encima.
+  - *Enum equivocado:* se pegó el contenido de `EstadoDron` dentro de `EstadoPedido`; se corrigió dejando en cada archivo solo su enum.
+- **Qué sigue:** terminar las entidades `Dron`, `Telemetria` y `Ruta`.
+
+### Planificado
+
+- Repositorios (`JpaRepository`) de las cinco entidades.
+- Servicios con la lógica básica de cada entidad.
+- Manejo de errores (recurso no encontrado).
+- Controllers REST y CRUD de Cliente, Dron y Pedido.
+- Asignación de dron a pedido y generación de ruta.
+- Recepción de telemetría.
+- Colección de Postman con las pruebas.
 
 <!-- Copien este bloque para cada nuevo avance -->
 
-## 📸 Pruebas en Postman
+## 📸 Pruebas y capturas
 
-*(Agregar aquí las capturas de cada funcionalidad a medida que se implemente)*
+*(Agregar aquí las capturas a medida que se implemente cada funcionalidad: tablas en pgAdmin y pruebas en Postman)*
 
 ## ✅ Estado del proyecto
 
 - [x] Repositorio y proyecto base
-- [ ] Conexión a PostgreSQL
-- [ ] Entidades JPA
-- [ ] CRUD de Cliente, Dron y Pedido
+- [x] Conexión a PostgreSQL (Neon)
+- [ ] Entidades JPA (`Cliente` y `Pedido` listas; faltan `Dron`, `Telemetria` y `Ruta`)
+- [ ] Repositorios
+- [ ] Servicios
+- [ ] Controllers y CRUD de Cliente, Dron y Pedido
 - [ ] Asignación de dron y generación de ruta
 - [ ] Recepción de telemetría
 - [ ] Colección de Postman final
