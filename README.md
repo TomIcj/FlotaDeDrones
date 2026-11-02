@@ -26,7 +26,7 @@ Este proyecto es el back end de un sistema de gestión de entregas mediante dron
 |---|---|
 | **Universidad** | Universidad del Norte Santo Tomás de Aquino (UNSTA) |
 | **Asignatura** | BackEnd |
-| **Profesor** | Ing. Tulio |
+| **Profesor** | Tulio Ruesjas Martín |
 
 ## 👥 Integrantes
 
