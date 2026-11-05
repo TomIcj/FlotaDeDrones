@@ -1,6 +1,7 @@
 package com.example.dron.controller;
 
 import com.example.dron.model.Dron;
+import com.example.dron.model.EstadoDron;
 import com.example.dron.service.DronService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,13 @@ public class DronController {
 
     @PutMapping("/{id}")
     public Dron actualizar(@PathVariable Integer id, @RequestBody Dron dron) {
+        return dronService.actualizar(id, dron);
+    }
+
+    @PatchMapping("/{id}/estado")
+    public Dron cambiarEstado(@PathVariable Integer id, @RequestParam EstadoDron estado) {
+        Dron dron = dronService.buscarPorId(id);
+        dron.setEstado(estado);
         return dronService.actualizar(id, dron);
     }
 

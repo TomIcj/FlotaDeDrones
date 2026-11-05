@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
 ### Configuración con contraseña ###
 src/main/resources/application.properties
