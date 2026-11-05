@@ -1,5 +1,6 @@
 package com.example.ruta.controller;
 
+import com.example.ruta.dto.AsignacionRequest;
 import com.example.ruta.model.Ruta;
 import com.example.ruta.service.RutaService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class RutaController {
     @ResponseStatus(HttpStatus.CREATED)
     public Ruta crear(@RequestBody Ruta ruta) {
         return rutaService.crear(ruta);
+    }
+
+    @PostMapping("/asignar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Ruta asignar(@RequestBody AsignacionRequest request) {
+        return rutaService.asignar(request);
     }
 
     @GetMapping
