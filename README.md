@@ -28,7 +28,7 @@ El sistema está dividido en **5 microservicios**. Cada uno es un proyecto Sprin
 |---|---|
 | **Universidad** | Universidad del Norte Santo Tomás de Aquino (UNSTA) |
 | **Asignatura** | BackEnd |
-| **Profesor** | Tulio Ruesjas Martín |
+| **Profesor** | Tulio Martín Ruesjas |
 
 ## 👥 Integrantes
 
