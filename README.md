@@ -258,7 +258,10 @@ Cada servicio se consulta directamente en su puerto (no hay API Gateway).
 | dron (8083) | `PUT` | `/drones/{id}` | Actualizar un dron | ✅ |
 | dron (8083) | `PATCH` | `/drones/{id}/estado?estado=` | Cambiar el estado de un dron | ✅ |
 | dron (8083) | `DELETE` | `/drones/{id}` | Eliminar un dron | ✅ |
-| telemetria (8084) | — | *(a completar por Tomás)* | Registrar y consultar telemetría de un dron | ⬜ |
+| telemetria (8084) | `POST` | `/telemetria` | Registrar y consultar telemetría | ✅ |
+| telemetria (8084) | `POST` | `/telemetria` | Registrar y consultar telemetría | ✅ |
+| telemetria (8084) | `GET` | `/telemetria/{id}` | Consultar telemetría de un dron | ✅ |
+| telemetria (8084) | `GET` | `/telemetria/{id}` | Consultar telemetría de un dron | ✅ |
 | ruta (8085) | `POST` | `/rutas` | Crear una ruta manualmente | ✅ |
 | ruta (8085) | `POST` | `/rutas/asignar` | Asignar un dron a un pedido y generar la ruta | ✅ |
 | ruta (8085) | `GET` | `/rutas` | Listar rutas | ✅ |
