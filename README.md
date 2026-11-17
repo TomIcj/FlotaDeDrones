@@ -521,4 +521,4 @@ Plan previsto:
 - [x] `ruta-servicio` (asignación de dron a pedido)
 - [x] Comunicación entre servicios
 - [x] Pruebas en Postman
-- [ ] **Despliegue** (último paso pendiente)
+- [x] **Despliegue** (último paso pendiente)
